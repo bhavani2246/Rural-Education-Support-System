@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RuralEd Connect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="RuralEd Connect home">
+        <span class="brand-mark">RE</span>
+        <span>RuralEd Connect</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#classes">Classes</a>
+        <a href="#donate">Resources</a>
+        <a href="#notes">Notes</a>
+        <a href="#manage">Manage</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+        <button class="icon-button" id="textToggle" aria-label="Increase text size">A+</button>
+        <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">DBMS backed learning platform</p>
+          <h1>Programming classes, donated resources, and progress tracking for every learner.</h1>
+          <p class="hero-text">A responsive rural education system with student, teacher, donor, and admin roles; interactive lessons; saved highlights; resource requests; and database reports.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#classes">Start learning</a>
+            <a class="button secondary" href="#donate">Find resources</a>
+          </div>
+        </div>
+        <div class="auth-panel" id="authPanel">
+          <div class="tabs" role="tablist">
+            <button class="tab active" id="loginTab">Login</button>
+            <button class="tab" id="registerTab">Register</button>
+          </div>
+          <form id="loginForm" class="stack-form">
+            <label>Email<input name="email" type="email" value="student@example.com" required></label>
+            <label>Password<input name="password" type="password" value="student123" required></label>
+            <button class="button primary" type="submit">Login</button>
+            <p class="help">Demo accounts: student@example.com, teacher@example.com, donor@example.com, admin@example.com. Passwords match the role plus 123.</p>
+          </form>
+          <form id="registerForm" class="stack-form hidden">
+            <label>Name<input name="name" required></label>
+            <label>Email<input name="email" type="email" required></label>
+            <label>Password<input name="password" type="password" minlength="6" required></label>
+            <label>Role
+              <select name="role" required>
+                <option>Student</option>
+                <option>Teacher</option>
+                <option>Donor</option>
+                <option>Admin</option>
+              </select>
+            </label>
+            <label>Location<input name="location"></label>
+            <button class="button primary" type="submit">Create account</button>
+          </form>
+          <div id="userPanel" class="user-panel hidden"></div>
+          <p id="authStatus" role="status"></p>
+        </div>
+      </section>
+
+      <section class="dashboard" id="dashboard">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Personal dashboard</p>
+            <h2>Learning, donations, and DBMS reports</h2>
+          </div>
+          <span id="rolePill" class="pill">Guest</span>
+        </div>
+        <div class="stat-grid" id="statGrid"></div>
+        <div class="impact-strip">
+          <article><strong>Step 1</strong><span>Login as a student, teacher, donor, or admin.</span></article>
+          <article><strong>Step 2</strong><span>Complete lessons, save notes, or list learning resources.</span></article>
+          <article><strong>Step 3</strong><span>Use dashboards and requests to connect support with learners.</span></article>
+        </div>
+      </section>
+
+      <section class="section" id="classes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Interactive teaching classes</p>
+            <h2>Choose a programming path</h2>
+          </div>
+          <input class="search-input" id="courseSearch" placeholder="Search courses">
+        </div>
+        <div class="course-grid" id="courseGrid"></div>
+      </section>
+
+      <section class="learning-shell course-slide" id="classroom">
+        <aside class="lesson-list" aria-label="Lesson list">
+          <h2 id="activeCourseTitle">Lessons</h2>
+          <button class="button secondary small" id="enrollButton">Enroll</button>
+          <div id="lessonList"></div>
+        </aside>
+
+        <article class="lesson-workspace" aria-live="polite">
+          <div class="lesson-topline">
+            <span id="lessonLanguage">Select a course</span>
+            <div class="tool-row">
+              <button class="button secondary small" id="saveHighlight">Highlight + note</button>
+              <button class="button primary small" id="completeLesson">Complete check</button>
+            </div>
+          </div>
+          <h2 id="lessonTitle">Start with a class above</h2>
+          <p id="lessonContent" class="lesson-content">Pick a course to view lessons, try a challenge, highlight useful sentences, and save notes to the database.</p>
+
+          <div class="code-panel">
+            <div class="code-title">Editable practice code</div>
+            <textarea id="codeEditor" spellcheck="false">// Lesson code appears here</textarea>
+            <div class="code-actions">
+              <button class="button secondary small" id="resetCode">Reset</button>
+              <button class="button primary small" id="runCode">Preview output</button>
+            </div>
+            <pre class="output-box" id="codeOutput">Output preview appears here.</pre>
+          </div>
+
+          <div class="challenge">
+            <h3>Quick check</h3>
+            <p id="challengeText">Answer checks will appear after selecting a lesson.</p>
+            <label for="answerInput">Your answer</label>
+            <div class="answer-row">
+              <input id="answerInput" type="text" placeholder="Type your answer">
+              <button class="button primary small" id="checkAnswer">Check</button>
+            </div>
+            <p id="answerFeedback" role="status"></p>
+            <div class="resource-row" id="lessonResources"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section split" id="donate">
+        <div>
+          <p class="eyebrow">Book and resource donation</p>
+          <h2>Share or request study materials.</h2>
+          <div class="filters">
+            <input id="resourceSearch" placeholder="Search books, devices, donor">
+            <select id="resourceType">
+              <option>All</option>
+              <option>Books</option>
+              <option>Device</option>
+              <option>Stationery</option>
+              <option>Internet Support</option>
+            </select>
+            <input id="resourceLocation" placeholder="Location">
+            <button class="button secondary small" id="applyFilters">Filter</button>
+          </div>
+          <form class="donation-form" id="donationForm">
+            <div class="form-grid">
+              <label>Donor name<input name="donor_name" required></label>
+              <label>Item type
+                <select name="item_type" required>
+                  <option>Books</option>
+                  <option>Device</option>
+                  <option>Stationery</option>
+                  <option>Internet Support</option>
+                </select>
+              </label>
+              <label>Title / resource<input name="title" required></label>
+              <label>Quantity<input name="quantity" type="number" min="1" value="1" required></label>
+              <label>Contact<input name="contact" required></label>
+              <label>Location<input name="location"></label>
+            </div>
+            <label>Condition note<textarea name="condition_note" rows="3"></textarea></label>
+            <button class="button primary" type="submit">Add donation</button>
+            <p id="donationStatus" role="status"></p>
+          </form>
+        </div>
+        <div class="donation-list" id="donationList" aria-live="polite"></div>
+      </section>
+
+      <section class="section" id="notes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Saved study notes</p>
+            <h2>Your highlights and notes</h2>
+          </div>
+        </div>
+        <div class="notes-grid" id="notesGrid"></div>
+      </section>
+
+      <section class="section manage" id="manage">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Teacher and admin tools</p>
+            <h2>Manage learning content and reports</h2>
+          </div>
+        </div>
+        <div class="manage-grid">
+          <form id="lessonForm" class="stack-form">
+            <h3>Add lesson</h3>
+            <label>Course<select name="course_id" id="lessonCourseSelect"></select></label>
+            <label>Title<input name="title" required></label>
+            <label>Summary<input name="summary" required></label>
+            <label>Content<textarea name="content" rows="4" required></textarea></label>
+            <label>Starter code<textarea name="starter_code" rows="4" required></textarea></label>
+            <label>Challenge<input name="challenge" required></label>
+            <label>Question<input name="question" required></label>
+            <label>Answer<input name="answer" required></label>
+            <label>Expected output<input name="expected_output"></label>
+            <label>Hint<input name="hint"></label>
+            <button class="button primary" type="submit">Add lesson</button>
+            <p id="lessonFormStatus" role="status"></p>
+          </form>
+          <div class="admin-panel" id="adminPanel"></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="noteDialog">
+      <form method="dialog" class="note-dialog">
+        <h2>Save highlight</h2>
+        <p id="selectedTextPreview"></p>
+        <label for="noteText">Your note</label>
+        <textarea id="noteText" rows="4" placeholder="Why is this useful?"></textarea>
+        <label for="highlightColor">Highlight color</label>
+        <input id="highlightColor" type="color" value="#ffe08a">
+        <div class="dialog-actions">
+          <button class="button secondary" value="cancel">Cancel</button>
+          <button class="button primary" id="confirmNote" value="default">Save note</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
