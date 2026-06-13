@@ -1,58 +1,80 @@
-# Rural Education System
+# Rural Education Support System
 
-A full-stack DBMS website for rural and low-income students. It provides interactive programming classes, book/resource donation tracking, and saved notes/highlights.
+A full-stack database-driven web application designed to improve access to quality education for students in rural and low-income communities. This system bridges the gap between educational resources and underprivileged students by managing learning content, donations, and student progress efficiently.
 
-## Features
+## 🚀 Features
 
-- Responsive frontend built with HTML, CSS, and JavaScript for mobile phones, tablets, and laptops
-- Python Flask backend with a SQL database
-- Default database is SQLite; optional MySQL support is available via `DB_TYPE=mysql`
-- Login/register with Student, Teacher, Donor, and Admin roles
-- Dashboard with DBMS reports and progress statistics
-- Seeded programming courses and accurate beginner-friendly lessons
-- Interactive quiz-style lesson checks
-- Student enrollment and lesson progress tracking
-- Book and learning-resource donation form
-- Donation search, filters, resource requests, and status updates
-- Student notes and sentence highlights saved to the database
-- Teacher lesson upload form
-- Admin report for users, requests, and progress
-- Dark mode and larger text accessibility controls
+* Responsive frontend built with HTML, CSS, and JavaScript (mobile-friendly)
+* Python Flask backend with SQL database integration
+* Supports both SQLite (default) and MySQL databases
+* Role-based authentication:
 
-## Run
+  * Student
+  * Teacher
+  * Donor
+  * Admin
+* Interactive programming courses with beginner-friendly lessons
+* Quiz-based learning and progress tracking
+* Student enrollment and performance monitoring
+* Book and learning-resource donation system
+* Resource search, request, and approval workflow
+* Notes and sentence highlighting saved to database
+* Teacher lesson upload functionality
+* Admin dashboard with reports and analytics
+* Dark mode and accessibility options
 
-```powershell
+## 🛠️ Tech Stack
+
+* Frontend: HTML, CSS, JavaScript
+* Backend: Python (Flask)
+* Database: SQLite / MySQL
+
+## ▶️ How to Run
+
+```bash
 python -m pip install -r requirements.txt
 python app.py
 ```
 
-Open:
+Open in browser:
 
-```text
+```
 http://127.0.0.1:5000
 ```
 
-The default database is SQLite and is created automatically at `instance/rural_education.db`.
+Default database:
 
-### MySQL support
+```
+instance/rural_education.db
+```
 
-Set `DB_TYPE=mysql` to use a MySQL database and provide connection details with:
+## 🗄️ MySQL Configuration (Optional)
 
-- `MYSQL_HOST` (default `127.0.0.1`)
-- `MYSQL_PORT` (default `3306`)
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
-- `MYSQL_DATABASE`
+Set environment variable:
 
-The app will create the MySQL database automatically if it does not exist.
+```
+DB_TYPE=mysql
+```
 
-## Demo Accounts
+Then configure:
 
-Use these accounts to test each role:
+* MYSQL_HOST (default: 127.0.0.1)
+* MYSQL_PORT (default: 3306)
+* MYSQL_USER
+* MYSQL_PASSWORD
+* MYSQL_DATABASE
 
-```text
+The database will be created automatically if it does not exist.
+
+## 🔑 Demo Accounts
+
+```
 Student: student@example.com / student123
 Teacher: teacher@example.com / teacher123
 Donor: donor@example.com / donor123
 Admin: admin@example.com / admin123
 ```
+
+## 🎯 Objective
+
+To provide an accessible, scalable, and efficient platform that empowers rural students through digital education and resource sharing.
